@@ -1,0 +1,495 @@
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0px #f1f1f1;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: #f6f6f6;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #dbdbdb;
+    -webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d0d0d0;
+}
+
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
+button, input[type=checkbox] {
+    cursor: pointer;
+}
+button svg {
+    top: 3px;
+}
+.screen.notes.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+.screen.notes .topbar {
+    width: 99%;
+    padding: 10px;
+    z-index: 3;
+    /*border-bottom: 1px solid #bfbfbf;*/
+}
+.screen.notes .sidebar {
+    margin-top: 2px;
+    width: 220px;
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;
+    z-index: 2;
+}
+.screen.notes .notes {
+    padding-left: 220px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;
+    margin-bottom: 100px;
+}
+.screen.notes .sidebar .notes-links {
+    padding-bottom: 110px;
+}
+.screen.notes .sidebar .note-link {
+    width: 220px;
+    text-align: left;
+    border: none;
+    color: #212529;
+    font-weight: bold;
+    font-size: 0.8em;
+    white-space: pre-wrap;
+    border-bottom: 1px solid #e6e6e6;
+    border-left: #fff 4px solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.screen.notes .sidebar .note-link:focus {
+    box-shadow: none;
+    background: #fafafa;
+}
+.screen.notes .sidebar .note-link:hover {
+    background: #fafafa;
+}
+.screen.notes .sidebar .note-link.active {
+    border-left: #0787FF 4px solid;
+    background: #eee;
+}
+
+.screen.notes .sidebar .note-link-checkbox  {
+    left: 5px;
+    right: 0;
+}
+
+.screen.notes .notes {
+    padding-bottom: 100px;
+    margin-top: 2px;
+}
+.screen.notifications .notifications {
+    padding: 20px;
+}
+.screen.notifications .notifications .notification .card-title,
+.screen.notes .notes .note .card-title {
+    font-size: 0.9em;
+}
+.screen.notifications .notifications .notification,
+.screen.notes .notes .note {
+    border: 1px #f1f1f1 solid;
+}
+
+.screen.notifications .notifications .notification {
+    margin-bottom: 15px;
+}
+.screen.notifications .notifications .notification:hover,
+.screen.notes .notes .note:hover {
+    background: #fafafa;
+}
+
+.screen.notifications .notifications .notification .title,
+.screen.notes .notes .note .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.screen.notifications .notifications .notification .title {
+    margin-bottom: 30px;
+}
+.screen.notes mark {
+    background: yellow;
+    padding: 0;
+}
+.screen.notifications .notifications .notification .date,
+.screen.notes .notes .note .date {
+    font-size: 11px;
+    margin-top: -20px;
+}
+.screen.notes .notes .note .reminder {
+    color: #dc3545;
+    font-size: 11px;
+    margin-left: 10px;
+}
+.screen.notifications .notifications .notification .content,
+.screen.notes .notes .note .content {
+    margin-top: 20px;
+    white-space: pre-wrap;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+}
+.screen.notes .notes .note {
+    border-left: #fff 4px solid;
+}
+.screen.notifications .notifications .notification.unread {
+    border-left: #dc3545 4px solid;
+    background: #fafafa;
+}
+
+.screen.import-notes.container-fluid,
+.screen.about.container-fluid,
+.screen.help.container-fluid,
+.screen.settings.container-fluid,
+.screen.editor.container-fluid,
+.screen.set-master-password.container-fluid,
+.screen.change-master-password.container-fluid,
+.screen.enter-master-password.container-fluid,
+.screen.notifications.container-fluid {
+    padding: 0;
+    margin: 0;
+}
+.screen.notes .notes .note .secrets{
+    padding: 10px 0 5px 0;
+}
+.screen.notes .notes .note .secrets .secret {
+    margin-right: 5px;
+}
+.screen.import-notes .topbar,
+.screen.about .topbar,
+.screen.help .topbar,
+.screen.settings .topbar,
+.screen.set-master-password .topbar,
+.screen.change-master-password .topbar,
+.screen.enter-master-password .topbar,
+.screen.editor .topbar,
+.screen.notifications .topbar {
+    width: 99%;
+    padding: 10px;
+    z-index: 3;
+    /*border-bottom: 1px solid #bfbfbf;*/
+    position: fixed;
+    background: #fff;
+}
+.screen.import-notes .content-wrap,
+.screen.about .content-wrap,
+.screen.help .content-wrap,
+.screen.settings .content-wrap,
+.screen.set-master-password .content-wrap,
+.screen.change-master-password .content-wrap,
+.screen.enter-master-password .content-wrap,
+.screen.notifications .content-wrap,
+.screen.editor .content-wrap {
+    padding-top: 42px;
+}
+.screen.about .content-wrap {
+    padding-top: 55px;
+}
+.screen.import-notes .content-wrap {
+    padding-top: 52px;
+}
+.screen.about .content-wrap img {
+    border-radius:50%;
+    -webkit-transition: -webkit-transform .5s ease-in-out;
+    -ms-transition: -ms-transform .5s ease-in-out;
+    transition: transform .5s ease-in-out;
+    width: 64px;
+    height: 64px;
+}
+.screen.about .content-wrap img:hover {
+    transform:rotate(360deg);
+    -ms-transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
+}
+.screen.change-master-password .alert,
+.screen.set-master-password .alert {
+    margin: 10px;
+}
+.screen.change-master-password .current-password-feedback,
+.screen.change-master-password .input-feedback,
+.screen.set-master-password .input-feedback,
+.screen.import-notes .input-feedback,
+.screen.import-notes .import-data-feedback {
+    margin-top: .25rem;
+    color: #dc3545;
+    font-size: small;
+}
+
+.screen.editor .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #212529;
+}
+.screen.editor .content {
+    color: #212529;
+    font-size: 90%;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.screen.editor .editor-secret {
+    margin-top: 10px;
+}
+.invalid-feedback {
+    font-size: 0.7em;
+}
+.editor-secret {
+    height: 32px;
+    max-height: 32px;
+    margin-bottom: 20px;
+}
+.btn-warning {
+    color: #000;
+}
+
+
+h4 {
+    font-size: 20px;
+}
+/* New note styles*/
+.screen.notifications .notifications .notification {
+    padding: 15px;
+    border-radius: 3px;
+}
+.screen.notes .notes .note {
+    padding: 15px;
+    border-radius: 0.2rem;
+    border-top: 1px solid #fff;
+}
+.screen.notifications .notifications .notification h1,h2,h3,h4,h5,h6,
+.screen.notes .notes .note h1,h2,h3,h4,h5,h6 {
+    line-height: normal;
+}
+.screen.notifications .notifications .notification h1,
+.screen.notes .notes .note h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 74px;
+}
+.screen.notifications .notifications .notification h2,
+.screen.notes .notes .note h2 {
+    font-size: 11px;
+    color: #555555;
+}
+.screen.notifications .notifications .notification h2 > span,
+.screen.notes .notes .note h2 > span {
+    color: #dc3545;
+    font-size: 11px;
+    margin-left: 3px;
+}
+.screen.notifications .notifications .notification h3,
+.screen.notes .notes .note h3 {
+    padding: 10px 0 5px 0;
+}
+.screen.notifications .notifications .notification h3 > button,
+.screen.notes .notes .note h3 > button {
+    margin: 5px 5px 5px 0;
+}
+.screen.notifications .notifications .notification h4,
+.screen.notes .notes .note h4 {
+    margin-top: 15px;
+    white-space: pre-line;
+    word-break: break-all;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+}
+.screen.notifications .notifications .notification h5,
+.screen.notes .notes .note h5 {
+    position: absolute;
+    right: 15px;
+}
+.screen.notifications .notifications .notification h5 {
+    right: 35px;
+}
+.screen.notifications .notifications .notification.unread {
+    border-left: #dc3545 4px solid;
+    background: #fff2f7;
+}
+.screen.notes .notes .note.active {
+    border-left: #0787FF 4px solid;
+    border-top: 1px solid #eee;
+    background: #eee;
+}
+
+.screen.settings .content-wrap {
+    padding: 20px;
+    padding-top: 52px;
+}
+
+.left-status-bar {
+    position: fixed;
+    background: #fff;
+    z-index: 10;
+    width: auto;
+    bottom: 0;
+    font-size: .7em;
+    color: #555555;
+    padding: 4px;
+}
+
+.right-status-bar {
+    position: fixed;
+    background: #fff;
+    z-index: 10;
+    width: auto;
+    bottom: 0;
+    font-size: .7em;
+    color: #555555;
+    right: 12px;
+}
+
+.right-status-bar label {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.right-status-bar .custom-control-inline {
+     margin: 0;
+}
+.right-status-bar .form-check-inline {
+    padding-left: 2px;
+    margin-right: 0;
+}
+
+.screen.editor .reminder-links {
+    margin-bottom: 20px;
+}
+.screen.editor .reminder-links button {
+    margin: 2px;
+}
+
+.btn-warning {
+    color: #636b71;
+}
+.btn-warning:hover {
+    color: #4a5054;
+}
+.note-link .is-deleted {
+    color: #4a5054;
+    margin: 1px;
+}
+.note-link .is-secret {
+    color: #17a2b8;
+    margin: 1px;
+}
+.note-link .is-star {
+    color: #ffc107;
+    margin: 1px;
+}
+.note-link .is-reminder {
+    color: #dc3545;
+    margin: 1px;
+}
+.note-reminder-btn {
+    border: none;
+}
+
+.deleted-badge {
+    font-size: 14px;
+    padding: 5px;
+    color: #dc3545;
+    border-radius: 4px;
+    border: 1px solid #dc3545;
+}
+
+.lx-toast-bottom {
+    bottom: 20px;
+}
+
+.banner-empty {
+    color: #9babb5;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.date-filter-bar {
+    padding: 10px 0 0 0;
+    margin: 0;
+}
+
+.date-filter-bar select {
+    margin: 0 !important;
+}
+
+.btn {
+    min-width: 32px;
+}
+
+.btn > .fa-icon {
+    vertical-align: middle;
+    margin-bottom: 3px;
+}
+
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+    border:none;
+    outline:none;
+}
+
+.screen.notes mark.active {
+    background: #dc3545 !important;
+    color: #fff;
+}
+
+.bottom-nav-bar {
+    position: fixed;
+    right: 101px;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.notes-pagination {
+    position: fixed;
+    z-index: 900;
+    bottom: 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.tutorial {
+    padding: 20px;
+}
+.tutorial h1 { font-size: 24px; font-weight: bold }
+.tutorial h2 { font-size: 20px; font-weight: bold }
+.tutorial h3 { font-size: 20px; }
+.tutorial h4 { font-size: 20px; }
+.tutorial h5 { font-size: 20px; }
+.tutorial h6 { font-size: 20px; }
+
+.search-cmd-area {
+    padding: 20px;
+}
+
+.search-cmd-area h1{
+    font-size: 18px;
+    font-weight: bold;
+}
+.search-cmd-area h1{
+    font-size: 18px;
+}
+
+.search-cmd-area.hash .result{
+    margin: 20px 0 0 0;
+}
+
+.search-cmd-area.tz .diff{
+    font-size: 12px;
+}
+
