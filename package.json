@@ -1,8 +1,8 @@
 {
   "name": "notic-desktop",
-  "version": "1.5.2",
-  "author": "Sergey Tolokonnikov <notictech@gmail.com>",
-  "description": "Personal notes manager",
+  "version": "1.5.3",
+  "author": "Sergey Tolokonnikov <sergey.tolokonnikov.mail@gmail.com>",
+  "description": "Personal encrypted note manager with a password manager, organizer, and other functions",
   "license": "GPL-3.0",
   "main": "./dist/electron/main.js",
   "scripts": {
