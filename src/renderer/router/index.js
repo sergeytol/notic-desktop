@@ -51,6 +51,11 @@ export default new Router({
       component: require('@/components/ImportPage').default
     },
     {
+      path: '/chat',
+      name: 'chat-page',
+      component: require('@/components/ChatPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

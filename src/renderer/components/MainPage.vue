@@ -74,6 +74,9 @@
                     <b-button-group size="sm">
                         <b-btn :variant="this.$store.state.Store.dateFilterActive ? 'warning' : 'primary' " @click="toggleDateFilter()" title="Date filter (Ctrl+D)"><icon name="calendar"></icon></b-btn>
                     </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn variant="primary" :variant="this.$store.state.Store.chatIsUnread ? 'danger' : 'primary' " @click="openChatPage()" title="P2P chat (Ctrl+P)"><icon name="comments"></icon></b-btn>
+                    </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-alt"></icon></b-btn>
@@ -315,6 +318,9 @@
       },
       openNotificationsPage () {
         this.$router.replace('/notifications')
+      },
+      openChatPage () {
+        this.$router.replace('/chat')
       },
       openImport () {
         this.$router.replace('/import')
@@ -631,6 +637,7 @@
           'ctrl+e': this.openRecentNote,
           'ctrl+enter': this.focusOnNoteMenu,
           'ctrl+n': this.openNotificationsPage,
+          'ctrl+p': this.openChatPage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterSecrets,
           'ctrl+3': this.setSearchFilterStar,
