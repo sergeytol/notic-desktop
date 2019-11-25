@@ -51,7 +51,10 @@
                     <b-row>
                         <b-col>
                             <div class="messages">
-
+                                <p v-for="(message, index) in chat.messages" :index="index">
+                                    <strong>{{ message.from }}: </strong>
+                                    {{ message.text }}
+                                </p>
                             </div>
                         </b-col>
                     </b-row>

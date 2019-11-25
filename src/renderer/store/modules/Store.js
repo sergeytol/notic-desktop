@@ -95,7 +95,33 @@ const state = {
   chat: {
     ownId: null,
     peerId: null,
-    message: ''
+    message: '',
+    messages: [
+      {
+        from: '61295veh0fg00000',
+        text: 'Hello!'
+      },
+      {
+        from: 'Me',
+        text: 'Hi! How are you?'
+      },
+      {
+        from: '61295veh0fg00000',
+        text: 'Hello!'
+      },
+      {
+        from: 'Me',
+        text: 'Hi! How are you?'
+      },
+      {
+        from: '61295veh0fg00000',
+        text: 'Hello!'
+      },
+      {
+        from: 'Me',
+        text: 'Hi! How are you?'
+      }
+    ]
   }
 }
 
@@ -303,7 +329,8 @@ const mutations = {
   setNotificationsIsUnread: (state, data) => { state.notificationsIsUnread = data },
   setChatOwnId: (state, data) => { state.chat.ownId = data },
   setChatPeerId: (state, data) => { state.chat.peerId = data },
-  setChatMessage: (state, data) => { state.chat.message = data }
+  setChatMessage: (state, data) => { state.chat.message = data },
+  pushChatMessage: (state, data) => { state.chat.messages.push(data) }
 }
 
 const getters = {

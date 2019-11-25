@@ -69,6 +69,10 @@
         conn.on('data', (data) => {
           console.log(data)
           console.log(this.chatConn)
+          this.$store.commit('pushChatMessage', {
+            from: this.chatConn.peer,
+            text: data
+          })
         })
         conn.on('close', () => {
           this.chatConn = null
@@ -93,6 +97,10 @@
       },
       sendChatMessage () {
         this.chatConn.send(this.chat.message)
+        this.$store.commit('pushChatMessage', {
+          from: 'Me',
+          text: this.chat.message
+        })
       }
     },
     created () {
