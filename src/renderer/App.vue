@@ -33,7 +33,7 @@
     name: 'notic-desktop',
     data () {
       return {
-        connections: []
+        chatConn: null
       }
     },
     computed: {
@@ -68,9 +68,10 @@
       setChatListeners (conn) {
         conn.on('data', (data) => {
           console.log(data)
+          console.log(this.chatConn)
         })
         conn.on('close', () => {
-          this.connections = this.connections.filter(connection => connection.connectionId !== conn.connectionId)
+          this.chatConn = null
         })
         conn.on('error', (err) => {
           console.error(err)
@@ -85,16 +86,13 @@
           serialization: 'json'
         })
         conn.on('open', () => {
-          conn.send('hi!')
-          this.connections.push(conn)
+          conn.send('ping!')
+          this.chatConn = conn
           this.setListeners(conn)
         })
       },
-      poke: function (conn) {
-        conn.send('poke!')
-      },
       sendChatMessage () {
-        this.connections[0].send(this.chat.message)
+        this.chatConn.send(this.chat.message)
       }
     },
     created () {
@@ -102,8 +100,10 @@
         this.$store.commit('setChatOwnId', id)
       })
       this.$peer.on('connection', (conn) => {
-        this.connections.push(conn)
+        this.chatConn = conn
         this.setChatListeners(conn)
+        this.$store.commit('setChatPeerId', conn.peer)
+        console.log(conn.peer, 'just connected')
       })
       this.$peer.on('close', () => {
         console.log('close')

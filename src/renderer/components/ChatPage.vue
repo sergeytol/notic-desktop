@@ -30,7 +30,7 @@
                         </b-col>
                         <b-col>
                             <b-input-group class="mt-3">
-                                <b-input size="sm" id="peer-id" placeholder="Peer ID" @input="inputPeerId($event)"></b-input>
+                                <b-input size="sm" id="peer-id" placeholder="Peer ID" :value="chat.peerId" @input="inputPeerId($event)"></b-input>
                                 <b-input-group-append>
                                     <b-button size="sm" variant="primary" @click="chatConnect">Connect <icon name="plug"></icon></b-button>
                                 </b-input-group-append>
