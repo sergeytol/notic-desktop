@@ -93,7 +93,9 @@ const state = {
   preventSearch: false,
   searchCmd: null,
   chat: {
-    ownId: null
+    ownId: null,
+    peerId: null,
+    message: ''
   }
 }
 
@@ -299,7 +301,9 @@ const mutations = {
     state.exportedNotes = data
   },
   setNotificationsIsUnread: (state, data) => { state.notificationsIsUnread = data },
-  setChatOwnId: (state, data) => { state.chat.ownId = data }
+  setChatOwnId: (state, data) => { state.chat.ownId = data },
+  setChatPeerId: (state, data) => { state.chat.peerId = data },
+  setChatMessage: (state, data) => { state.chat.message = data }
 }
 
 const getters = {

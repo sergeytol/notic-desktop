@@ -42,6 +42,9 @@
           'ctrl+shift+w': this.changeDarkTheme,
           'ctrl+w': this.changeWindowOnTop
         }
+      },
+      chat () {
+        return this.$store.getters.chat
       }
     },
     methods: {
@@ -74,7 +77,7 @@
         })
       },
       chatConnect: function () {
-        const conn = this.$peer.connect(this.peerId, {
+        const conn = this.$peer.connect(this.chat.peerId, {
           label: 'user',
           metadata: {
             name: 'userName'
@@ -89,6 +92,9 @@
       },
       poke: function (conn) {
         conn.send('poke!')
+      },
+      sendChatMessage () {
+        this.connections[0].send(this.chat.message)
       }
     },
     created () {

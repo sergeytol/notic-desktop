@@ -30,7 +30,7 @@
                         </b-col>
                         <b-col>
                             <b-input-group class="mt-3">
-                                <b-input size="sm" id="peer-id" placeholder="Peer ID"></b-input>
+                                <b-input size="sm" id="peer-id" placeholder="Peer ID" @input="inputPeerId($event)"></b-input>
                                 <b-input-group-append>
                                     <b-button size="sm" variant="primary" @click="chatConnect">Connect <icon name="plug"></icon></b-button>
                                 </b-input-group-append>
@@ -41,9 +41,9 @@
                     <b-row>
                         <b-col>
                             <b-input-group class="mt-3">
-                                <b-input size="sm" id="peer-id" placeholder="Enter something..."></b-input>
+                                <b-input size="sm" id="peer-id" placeholder="Enter something..." @input="inputMessage($event)"></b-input>
                                 <b-input-group-append>
-                                    <b-button size="sm" variant="primary">Send <icon name="dove"></icon></b-button>
+                                    <b-button size="sm" variant="primary" @click="sendMessage()">Send <icon name="dove"></icon></b-button>
                                 </b-input-group-append>
                             </b-input-group>
                         </b-col>
@@ -85,6 +85,15 @@
       },
       chatConnect () {
         this.$parent.chatConnect()
+      },
+      inputPeerId (event) {
+        this.$store.commit('setChatPeerId', event)
+      },
+      inputMessage (event) {
+        this.$store.commit('setChatMessage', event)
+      },
+      sendMessage () {
+        this.$parent.sendChatMessage()
       }
     }
   }
