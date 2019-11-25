@@ -3,6 +3,8 @@ import BootstrapVue from 'bootstrap-vue'
 import axios from 'axios'
 import VueHotkey from 'v-hotkey'
 import Toast from 'vue2-toast'
+import Peer from 'peerjs'
+import VuePeerJS from 'vue-peerjs'
 
 import App from './App'
 import router from './router'
@@ -17,6 +19,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/custom.css'
 import './assets/custom-dark.css'
 
+Vue.use(VuePeerJS, new Peer({}))
 Vue.use(BootstrapVue)
 Vue.use(VueHotkey)
 Vue.use(Toast, {
@@ -29,6 +32,7 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.component('icon', Icon)
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

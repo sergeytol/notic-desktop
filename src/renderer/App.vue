@@ -31,6 +31,11 @@
 <script>
   export default {
     name: 'notic-desktop',
+    data () {
+      return {
+        connections: []
+      }
+    },
     computed: {
       keymap () {
         return {
@@ -56,7 +61,50 @@
       changeDarkTheme () {
         let darkThemeBool = !!this.$refs.darkThemeCheckbox.checked
         this.toggleDarkTheme(+!darkThemeBool)
+      },
+      setChatListeners (conn) {
+        conn.on('data', (data) => {
+          console.log(data)
+        })
+        conn.on('close', () => {
+          this.connections = this.connections.filter(connection => connection.connectionId !== conn.connectionId)
+        })
+        conn.on('error', (err) => {
+          console.error(err)
+        })
+      },
+      chatConnect: function () {
+        const conn = this.$peer.connect(this.peerId, {
+          label: 'user',
+          metadata: {
+            name: 'userName'
+          },
+          serialization: 'json'
+        })
+        conn.on('open', () => {
+          conn.send('hi!')
+          this.connections.push(conn)
+          this.setListeners(conn)
+        })
+      },
+      poke: function (conn) {
+        conn.send('poke!')
       }
+    },
+    created () {
+      this.$peer.on('open', (id) => {
+        this.$store.commit('setChatOwnId', id)
+      })
+      this.$peer.on('connection', (conn) => {
+        this.connections.push(conn)
+        this.setChatListeners(conn)
+      })
+      this.$peer.on('close', () => {
+        console.log('close')
+      })
+      this.$peer.on('disconnected', () => {
+        console.log('dis')
+      })
     }
   }
 </script>

@@ -91,7 +91,10 @@ const state = {
   historyTransition: false,
   needReload: false,
   preventSearch: false,
-  searchCmd: null
+  searchCmd: null,
+  chat: {
+    ownId: null
+  }
 }
 
 const mutations = {
@@ -295,8 +298,8 @@ const mutations = {
   setExportedNotes: (state, data) => {
     state.exportedNotes = data
   },
-  setNotificationsIsUnread: (state, data) => { state.notificationsIsUnread = data }
-
+  setNotificationsIsUnread: (state, data) => { state.notificationsIsUnread = data },
+  setChatOwnId: (state, data) => { state.chat.ownId = data }
 }
 
 const getters = {
@@ -322,7 +325,8 @@ const getters = {
       }
     }
     return index
-  }
+  },
+  chat: (state) => { return state.chat }
 }
 
 const actions = {
