@@ -35,7 +35,17 @@
                                     <b-button size="sm" variant="primary">Connect <icon name="plug"></icon></b-button>
                                 </b-input-group-append>
                             </b-input-group>
-                            <b-form-text id="input-live-help">Status: <b-badge variant="secondary">Dissconected</b-badge></b-form-text>
+                            <b-form-text id="input-live-help">Status: <b-badge variant="danger">Dissconected</b-badge></b-form-text>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col>
+                            <b-input-group class="mt-3">
+                                <b-input size="sm" id="peer-id" placeholder="Enter something..."></b-input>
+                                <b-input-group-append>
+                                    <b-button size="sm" variant="primary">Send <icon name="dove"></icon></b-button>
+                                </b-input-group-append>
+                            </b-input-group>
                         </b-col>
                     </b-row>
                     <b-row>
@@ -43,23 +53,6 @@
                             <div class="messages">
 
                             </div>
-                        </b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col>
-                            <b-input-group class="mt-3">
-                                <b-form-textarea
-                                        size="sm"
-                                        id="text-message"
-                                        placeholder="Enter something..."
-                                        rows="2"
-                                        max-rows="6"
-                                        autofocus
-                                ></b-form-textarea>
-                                <b-input-group-append>
-                                    <b-button size="sm" variant="primary">Send <icon name="dove"></icon></b-button>
-                                </b-input-group-append>
-                            </b-input-group>
                         </b-col>
                     </b-row>
                 </div>
