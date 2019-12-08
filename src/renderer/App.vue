@@ -67,7 +67,7 @@
       },
       setChatListeners (conn) {
         conn.on('data', (data) => {
-          console.log(data)
+          console.log('Received data:', data)
           console.log(this.chatConn)
           this.$store.commit('pushChatMessage', {
             from: this.chatConn.peer,
@@ -92,7 +92,7 @@
         conn.on('open', () => {
           conn.send('ping!')
           this.chatConn = conn
-          this.setListeners(conn)
+          this.setChatListeners(conn)
         })
       },
       sendChatMessage () {
@@ -117,7 +117,7 @@
         console.log('close')
       })
       this.$peer.on('disconnected', () => {
-        console.log('dis')
+        console.log('disconnected')
       })
     }
   }
