@@ -143,3 +143,25 @@ body.dark-theme {
     color: #c7c7c7;
     margin: 1px;
 }
+
+.screen.chat .chat-message {
+    background: #47494a;
+    color: #dadada;
+}
+
+.screen.chat .chat-message.sender{
+    background: #2a2b2c;
+    color: #dadada;
+}
+
+.screen.chat .chat-message .title{
+    color: #6c757d;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.screen.chat .chat-message .body{
+    margin: 10px;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em
+}

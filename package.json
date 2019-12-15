@@ -63,6 +63,7 @@
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "nedb": "^1.8.0",
+    "openpgp": "^4.7.1",
     "peerjs": "^1.1.0",
     "qr-image": "^3.2.0",
     "v-hotkey": "^0.2.3",

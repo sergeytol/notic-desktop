@@ -72,6 +72,7 @@ button svg {
     border-left: #fff 4px solid;
     padding-top: 10px;
     padding-bottom: 10px;
+    background: #fff;
 }
 .screen.notes .sidebar .note-link:focus {
     box-shadow: none;
@@ -97,9 +98,9 @@ button svg {
 .screen.notifications .notifications {
     padding: 20px;
 }
-.screen.chat .chat {
-    padding: 20px;
-}
+/*.screen.chat .chat {*/
+/*    padding: 20px;*/
+/*}*/
 .screen.notifications .notifications .notification .card-title,
 .screen.notes .notes .note .card-title {
     font-size: 0.9em;
@@ -202,6 +203,13 @@ button svg {
 .screen.chat .content-wrap,
 .screen.editor .content-wrap {
     padding-top: 42px;
+}
+.screen.chat .topbar {
+    padding-bottom: 20px;
+}
+.screen.chat .content-wrap {
+    padding-top: 192px;
+    overflow-x: hidden;
 }
 .screen.about .content-wrap {
     padding-top: 55px;
@@ -499,3 +507,30 @@ h4 {
     font-size: 12px;
 }
 
+.screen.chat .chat-messages-area {
+    padding: 10px 0px 10px 10px;
+    width: 99%;
+}
+
+.screen.chat .chat-message {
+    background: #eee;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.screen.chat .chat-message.sender{
+    background: #ddd;
+}
+
+.screen.chat .chat-message .title{
+    color: #6c757d;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.screen.chat .chat-message .body{
+    margin: 10px;
+    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em
+}
