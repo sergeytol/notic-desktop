@@ -72,6 +72,7 @@ button svg {
     border-left: #fff 4px solid;
     padding-top: 10px;
     padding-bottom: 10px;
+    background: #fff;
 }
 .screen.notes .sidebar .note-link:focus {
     box-shadow: none;

@@ -143,3 +143,9 @@ body.dark-theme {
     color: #c7c7c7;
     margin: 1px;
 }
+
+.dark-theme .alert.alert-secondary {
+    color: #dadada;
+    background-color: #47494a;
+    border-color: #47494a #47494a #47494a;
+}

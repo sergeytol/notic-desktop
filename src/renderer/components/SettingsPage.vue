@@ -15,92 +15,126 @@
                 </div>
             </div>
             <div class="content-wrap">
-                <b-form-group id="inputGroup1"
-                              label="Database location:">
-                    <b-input-group>
-                        <b-form-input id="input1"
-                                      type="text"
-                                      size="sm"
-                                      required
-                                      readonly
-                                      placeholder="Path..."
-                                      :value="this.dbPath">
-                        </b-form-input>
-                        <b-input-group-append>
-                            <b-button ref="settingsOpenDb" size="sm" title="Open database" @click="openDb()"><icon name="folder-open"></icon></b-button>
-                            <b-button size="sm" title="Create database" @click="createDb()"><icon name="plus"></icon></b-button>
-                        </b-input-group-append>
-                    </b-input-group>
-                </b-form-group>
-                <b-form-group id="inputGroup2" v-if="this.$store.state.Store.isLoggedIn"
-                              label="Alternative keyboard layout:">
-                    <b-input-group>
-                        <b-form-select size="sm" v-model="localKeymap" :options="localKeymaps" class="mb-3"></b-form-select>
-                    </b-input-group>
-                </b-form-group>
-                <b-form-group id="inputGroup3" v-if="this.$store.state.Store.isLoggedIn"
-                              label="History max length:">
-                    <b-input-group>
-                        <b-form-input id="input3"
-                                      type="number"
-                                      size="sm"
-                                      min="0"
-                                      max="100"
-                                      required
-                                      v-model="historyMaxLength"
-                                      :value="this.historyMaxLength">
-                        </b-form-input>
-                        <b-button-group style="margin-left: 10px">
-                            <b-button size="sm" @click="clearHistory()"><icon name="trash"></icon> Clear history</b-button>
-                        </b-button-group>
-                    </b-input-group>
-                </b-form-group>
-                <b-form-group id="inputGroup4" v-if="this.$store.state.Store.isLoggedIn"
-                              label="Automatically logout after:">
-                    <b-input-group>
-                        <b-form-input id="input4"
-                                      type="number"
-                                      size="sm"
-                                      min="0"
-                                      max="1440"
-                                      style="flex: none; width: 100px;"
-                                      required
-                                      v-model="logoutAfter"
-                                      :value="this.logoutAfter">
-                        </b-form-input>&nbsp;minutes of inactivity ("0" for disabling)
-                    </b-input-group>
-                </b-form-group>
-                <b-form-group id="inputGroup5" v-if="this.$store.state.Store.isLoggedIn"
-                              label="Automatically erase clipboard after:">
-                    <b-input-group>
-                        <b-form-input id="input5"
-                                      type="number"
-                                      size="sm"
-                                      min="0"
-                                      max="60"
-                                      style="flex: none; width: 100px;"
-                                      required
-                                      v-model="eraseClipboardAfter"
-                                      :value="this.eraseClipboardAfter">
-                        </b-form-input>&nbsp;seconds after secret copying ("0" for disabling)
-                    </b-input-group>
-                </b-form-group>
-                <b-form-group id="inputGroup6" v-if="this.$store.state.Store.isLoggedIn"
-                              label="Animation speed:">
-                    <b-input-group>
-                        <b-form-input id="input6"
-                                      type="number"
-                                      size="sm"
-                                      min="0"
-                                      max="1000"
-                                      step="50"
-                                      style="flex: none; width: 100px;"
-                                      required
-                                      v-model="animationSpeed"
-                                      :value="this.animationSpeed">
-                        </b-form-input>&nbsp;("0" for disabling)
-                    </b-input-group>
-                </b-form-group>
+                <b-tabs content-class="mt-3" small>
+                    <b-tab title="General" active>
+                        <b-form-group id="inputGroup1"
+                                      label="Database location:">
+                            <b-input-group>
+                                <b-form-input id="input1"
+                                              type="text"
+                                              size="sm"
+                                              required
+                                              readonly
+                                              placeholder="Path..."
+                                              :value="this.dbPath">
+                                </b-form-input>
+                                <b-input-group-append>
+                                    <b-button ref="settingsOpenDb" size="sm" title="Open database" @click="openDb()"><icon name="folder-open"></icon></b-button>
+                                    <b-button size="sm" title="Create database" @click="createDb()"><icon name="plus"></icon></b-button>
+                                </b-input-group-append>
+                            </b-input-group>
+                        </b-form-group>
+                        <b-form-group id="inputGroup2" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Alternative keyboard layout:">
+                            <b-input-group>
+                                <b-form-select size="sm" v-model="localKeymap" :options="localKeymaps" class="mb-3"></b-form-select>
+                            </b-input-group>
+                        </b-form-group>
+                        <b-form-group id="inputGroup3" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="History max length:">
+                            <b-input-group>
+                                <b-form-input id="input3"
+                                              type="number"
+                                              size="sm"
+                                              min="0"
+                                              max="100"
+                                              required
+                                              v-model="historyMaxLength"
+                                              :value="this.historyMaxLength">
+                                </b-form-input>
+                                <b-button-group style="margin-left: 10px">
+                                    <b-button size="sm" @click="clearHistory()"><icon name="trash"></icon> Clear history</b-button>
+                                </b-button-group>
+                            </b-input-group>
+                        </b-form-group>
+                        <b-form-group id="inputGroup4" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Automatically logout after:">
+                            <b-input-group>
+                                <b-form-input id="input4"
+                                              type="number"
+                                              size="sm"
+                                              min="0"
+                                              max="1440"
+                                              style="flex: none; width: 100px;"
+                                              required
+                                              v-model="logoutAfter"
+                                              :value="this.logoutAfter">
+                                </b-form-input>&nbsp;minutes of inactivity ("0" for disabling)
+                            </b-input-group>
+                        </b-form-group>
+                        <b-form-group id="inputGroup5" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Automatically erase clipboard after:">
+                            <b-input-group>
+                                <b-form-input id="input5"
+                                              type="number"
+                                              size="sm"
+                                              min="0"
+                                              max="60"
+                                              style="flex: none; width: 100px;"
+                                              required
+                                              v-model="eraseClipboardAfter"
+                                              :value="this.eraseClipboardAfter">
+                                </b-form-input>&nbsp;seconds after secret copying ("0" for disabling)
+                            </b-input-group>
+                        </b-form-group>
+                        <b-form-group id="inputGroup6" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Animation speed:">
+                            <b-input-group>
+                                <b-form-input id="input6"
+                                              type="number"
+                                              size="sm"
+                                              min="0"
+                                              max="1000"
+                                              step="50"
+                                              style="flex: none; width: 100px;"
+                                              required
+                                              v-model="animationSpeed"
+                                              :value="this.animationSpeed">
+                                </b-form-input>&nbsp;("0" for disabling)
+                            </b-input-group>
+                        </b-form-group>
+                    </b-tab>
+                    <b-tab title="Private">
+                        <b-alert show variant="secondary">These settings are stored in the <b>.ntc</b> file</b-alert>
+                        <h6>PGP keys
+                            <b-button variant="danger" size="sm"><icon name="key"></icon> Regenerate keys</b-button>
+                        </h6>
+                        <b-form-group id="inputpgpFingerprintGroup" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Fingerprint:">
+                            <b-input-group>
+                                <b-form-input v-model="pgpFingerprint" id="inputPgpFingerprint" readonly></b-form-input>
+                                <b-button><icon name="copy" title="Copy to clipboard"></icon></b-button>
+                            </b-input-group>
+                            <b-form-text id="input-pgp-fingerprint-help">Share the fingerprint with your messenger contacts</b-form-text>
+                        </b-form-group>
+                        <b-form-group id="inputPgpPubKeyGroup" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Public key:">
+                            <b-input-group>
+                                <b-textarea v-model="pgpPubKey" id="inputPgpPubKey"></b-textarea>
+                                <b-button><icon name="copy" title="Copy to clipboard"></icon></b-button>
+                            </b-input-group>
+                        </b-form-group>
+                        <b-form-group id="inputPgpPrivKeyGroup" v-if="this.$store.state.Store.isLoggedIn"
+                                      label="Private key:">
+                            <b-input-group>
+                                <b-textarea v-model="pgpPrivKey" id="inputPgpPrivKey"></b-textarea>
+                                <b-button><icon name="copy" title="Copy to clipboard"></icon></b-button>
+                            </b-input-group>
+                            <b-form-text id="input-pgp-privkey-help">Keep it in the secret!</b-form-text>
+                        </b-form-group>
+                    </b-tab>
+                </b-tabs>
+
             </div>
         </b-container>
     </b-form>
@@ -136,7 +170,10 @@
         historyMaxLength: 0,
         logoutAfter: 0,
         eraseClipboardAfter: 0,
-        animationSpeed: 0
+        animationSpeed: 0,
+        pgpFingerprint: '',
+        pgpPubKey: '',
+        pgpPrivKey: ''
       }
     },
     computed: {
