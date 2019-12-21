@@ -74,6 +74,9 @@
                     <b-button-group size="sm">
                         <b-btn :variant="this.$store.state.Store.dateFilterActive ? 'warning' : 'primary' " @click="toggleDateFilter()" title="Date filter (Ctrl+D)"><icon name="calendar"></icon></b-btn>
                     </b-button-group>
+                    <b-button-group size="sm">
+                        <b-btn variant="primary" @click="openMessengerPage()" title="P2P messenger (Ctrl+P)"><icon name="comments"></icon></b-btn>
+                    </b-button-group>
                     <b-button-group size="sm" v-show="searchFilter === 'deleted'">
                         <!--<b-btn variant="success" @click="restoreAllDeletedNotes()">Restore all</b-btn>-->
                         <b-btn variant="danger" @click="emptyTrash()" title="Empty trash"><icon name="trash-alt"></icon></b-btn>
@@ -312,6 +315,9 @@
         if (!this.$store.state.Store.misc.recentNoteId) return
         this.$store.dispatch('openRecentNote')
         this.$router.replace('/editor')
+      },
+      openMessengerPage () {
+        this.$router.replace('/messenger')
       },
       openNotificationsPage () {
         this.$router.replace('/notifications')
@@ -630,6 +636,7 @@
           'ctrl+space': this.openAddNotePage,
           'ctrl+e': this.openRecentNote,
           'ctrl+enter': this.focusOnNoteMenu,
+          'ctrl+p': this.openMessengerPage,
           'ctrl+n': this.openNotificationsPage,
           'ctrl+1': this.setSearchFilterNotes,
           'ctrl+2': this.setSearchFilterSecrets,

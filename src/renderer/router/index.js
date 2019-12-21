@@ -51,6 +51,11 @@ export default new Router({
       component: require('@/components/ImportPage').default
     },
     {
+      path: '/messenger',
+      name: 'messenger-page',
+      component: require('@/components/MessengerPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

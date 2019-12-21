@@ -160,6 +160,7 @@ button svg {
 .screen.set-master-password.container-fluid,
 .screen.change-master-password.container-fluid,
 .screen.enter-master-password.container-fluid,
+.screen.messenger.container-fluid,
 .screen.notifications.container-fluid {
     padding: 0;
     margin: 0;
@@ -178,6 +179,7 @@ button svg {
 .screen.change-master-password .topbar,
 .screen.enter-master-password .topbar,
 .screen.editor .topbar,
+.screen.messenger .topbar,
 .screen.notifications .topbar {
     width: 99%;
     padding: 10px;
@@ -194,6 +196,7 @@ button svg {
 .screen.change-master-password .content-wrap,
 .screen.enter-master-password .content-wrap,
 .screen.notifications .content-wrap,
+.screen.messenger .content-wrap,
 .screen.editor .content-wrap {
     padding-top: 42px;
 }
