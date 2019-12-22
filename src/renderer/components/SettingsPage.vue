@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="content-wrap">
-                <b-tabs content-class="mt-3" small>
+                <b-tabs content-class="mt-3" small v-model="tab">
                     <b-tab title="General" active>
                         <b-form-group id="inputGroup1"
                                       label="Database location:">
@@ -107,7 +107,7 @@
                     <b-tab title="Private">
                         <b-alert show variant="secondary">These settings are stored in the <b>.ntc</b> file</b-alert>
                         <h6>PGP keys
-                            <b-button variant="danger" size="sm"><icon name="key"></icon> Regenerate keys</b-button>
+                            <b-button variant="danger" size="sm"><icon name="key"></icon> Regenerate</b-button>
                         </h6>
                         <b-form-group id="inputpgpFingerprintGroup" v-if="this.$store.state.Store.isLoggedIn"
                                       label="Fingerprint:">
@@ -161,6 +161,7 @@
     },
     data () {
       return {
+        tab: 0,
         dbPath: '',
         masterPassword: '',
         localKeymap: '',
@@ -180,11 +181,15 @@
       keymap () {
         return {
           'esc': this.close,
-          'ctrl+s': this.settingsSaveAndClose
+          'ctrl+s': this.settingsSaveAndClose,
+          'ctrl+1': this.setTab0,
+          'ctrl+2': this.setTab1
         }
       }
     },
     methods: {
+      setTab0 () { this.tab = 0 },
+      setTab1 () { this.tab = 1 },
       settingsSaveAndClose () {
         if (this.dbPath !== this.$store.state.Store.settings.dbPath) {
           this.$store.commit('setDbPath', this.dbPath)
