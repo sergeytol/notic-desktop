@@ -58,7 +58,7 @@
     "axios": "^0.18.0",
     "bootstrap-vue": "2.0.0-rc.10",
     "crypto-js": "^3.1.9-1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "mark.js": "^8.11.1",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
