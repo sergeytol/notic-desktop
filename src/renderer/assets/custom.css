@@ -493,3 +493,21 @@ h4 {
     font-size: 12px;
 }
 
+.screen.notes.cloaking mark {
+    background: inherit !important;
+}
+
+.screen.notes.cloaking mark,
+.screen.notes.cloaking .left-status-bar:not(:active),
+.cloaking .notifications h1:not(:active),
+.cloaking .notes h2:not(:active),
+.cloaking .notifications h2:not(:active),
+.cloaking .notes h1:not(:active),
+.cloaking .sidebar .note-link:not(:active),
+.cloaking .notifications h4:not(:active),
+.cloaking .notes h4:not(:active),
+.cloaking .notes h3>button:not(:hover) {
+    text-shadow: 0 0 32px #000;
+    color: transparent !important;
+}
+

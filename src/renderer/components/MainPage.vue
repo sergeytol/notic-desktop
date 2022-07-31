@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid class="screen notes" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn">
+    <b-container fluid :class="{screen: true, notes: true, cloaking: cloakingEnabled}" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn">
         <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
             <div class="my-4 qr" v-html="qr"></div>
         </b-modal>
@@ -85,7 +85,7 @@
                             <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="caret-square-down"></icon></b-button>
                             <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="caret-square-up"></icon></b-button>
                         </b-button-group>
-                        <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" @keydown.native="searchKeydown($event)" ref="search" :value="searchQuery"></b-form-input>
+                        <b-form-input :type="cloakingEnabled ? 'password' : 'search'" class="note-search text-left" placeholder="Search" autofocus @input="searchNotes($event)" @keydown.native="searchKeydown($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">
                             <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="All (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="asterisk"></icon></b-button>
                             <b-button :variant="(searchFilter == 'secrets') ? 'warning' : 'secondary'" title="Secrets (Ctrl+2)" @click="setSearchFilter('secrets')"><icon name="key"></icon></b-button>
@@ -684,6 +684,9 @@
       },
       searchCmd () {
         return this.$store.state.Store.searchCmd
+      },
+      cloakingEnabled () {
+        return this.$store.state.Store.settings.cloaking
       }
     }
   }

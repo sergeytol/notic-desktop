@@ -49,7 +49,8 @@ const state = {
     eraseClipboardAfter: 0,
     windowOnTop: 0,
     darkTheme: 0,
-    animationSpeed: 0
+    animationSpeed: 0,
+    cloaking: 0
   },
   notes: [],
   note: {},
@@ -135,6 +136,7 @@ const mutations = {
   setLocalKeymap: (state, data) => { state.settings.localKeymap = data },
   setSettingsData: (state, data) => { state.settings = data },
   setDbPath: (state, data) => { state.settings.dbPath = data },
+  setCloaking: (state, data) => { state.settings.cloaking = data },
   setDarkTheme: (state, data) => { state.settings.darkTheme = data },
   setWindowOnTop: (state, data) => { state.settings.windowOnTop = data },
   setIsLoggedIn: (state, data) => { state.isLoggedIn = data },
@@ -1072,7 +1074,7 @@ const actions = {
         let msg = moment(reminder.reminderDate).format('DD.MM.YYYY') + ' at ' + reminder.reminderTime + '\n\r' + doc.title + '\n\r\n\r' + doc.content
 
         let notification = new Notification('', {
-          body: safeTags(msg),
+          body: state.settings.cloaking ? 'notification received' : safeTags(msg),
           icon: 'static/icons/notic-logo.png'
         })
 
@@ -1080,8 +1082,6 @@ const actions = {
           require('electron').remote.getCurrentWindow().webContents.send('open-notifications')
           require('electron').remote.getCurrentWindow().show()
         }
-
-        console.log(notification)
 
         let notif = {
           'doctype': 'notification',
@@ -1407,6 +1407,10 @@ const actions = {
   logout (context) {
     clipboard.writeText('')
     ipcRenderer.send('logout')
+  },
+  toggleCloaking (context, data) {
+    this.commit('setCloaking', data)
+    this.dispatch('saveSettingsFile', () => {})
   },
   toggleWindowOnTop (context, data) {
     this.commit('setWindowOnTop', data)

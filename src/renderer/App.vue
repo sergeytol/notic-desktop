@@ -6,6 +6,15 @@
          @scroll="trackUsage()">
         <router-view></router-view>
         <div class="right-status-bar">
+            <b-form-checkbox :checked="this.$store.state.Store.settings.cloaking"
+                             title="Cloaking (Ctrl+Shift+K)"
+                             ref="cloakingCheckbox"
+                             value="1"
+                             unchecked-value="0"
+                             plain
+                             @input="toggleCloaking($event)">
+                cloaking
+            </b-form-checkbox>
             <b-form-checkbox :checked="this.$store.state.Store.settings.darkTheme"
                              title="Dark theme (Ctrl+Shift+W)"
                              ref="darkThemeCheckbox"
@@ -34,6 +43,7 @@
     computed: {
       keymap () {
         return {
+          'ctrl+shift+k': this.changeCloaking,
           'ctrl+shift+w': this.changeDarkTheme,
           'ctrl+w': this.changeWindowOnTop
         }
@@ -49,6 +59,13 @@
       changeWindowOnTop () {
         let windowOnTopBool = !!this.$refs.windowOnTopCheckbox.checked
         this.toggleWindowOnTop(+!windowOnTopBool)
+      },
+      toggleCloaking (event) {
+        this.$store.dispatch('toggleCloaking', parseInt(event))
+      },
+      changeCloaking () {
+        let cloackingBool = !!this.$refs.cloakingCheckbox.checked
+        this.toggleCloaking(+!cloackingBool)
       },
       toggleDarkTheme (event) {
         this.$store.dispatch('toggleDarkTheme', parseInt(event))
