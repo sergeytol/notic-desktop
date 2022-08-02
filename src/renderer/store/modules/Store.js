@@ -29,7 +29,8 @@ const blankNote = {
   reminderRepeat: '0',
   reminderRemoveNote: false,
   star: false,
-  hidden: false
+  hidden: false,
+  color: ''
 }
 
 const state = {
@@ -92,7 +93,8 @@ const state = {
   historyTransition: false,
   needReload: false,
   preventSearch: false,
-  searchCmd: null
+  searchCmd: null,
+  noteColors: ['', '#E84B3C', '#F39C19', '#27AF60', '#2980B9', '#8E43AD', '#3D556E']
 }
 
 const mutations = {
@@ -152,6 +154,7 @@ const mutations = {
   updateNote: (state, data) => {
     state.note = data
   },
+  updateNoteColor: (state, data) => { state.note.color = data },
   updateNoteTitle: (state, data) => { state.note.title = data },
   updateNoteContent: (state, data) => { state.note.content = data },
   setNoteCreatedAt: (state, data) => { state.note.createdAt = data },
