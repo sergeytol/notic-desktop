@@ -1,6 +1,6 @@
 <template>
     <b-button-toolbar class="editor-secret" @input="modify()">
-        <b-button-group size="sm" class="mx-1">
+        <b-button-group size="sm">
             <div role="group">
                 <b-form-input size="sm"
                               class="text-left small"
@@ -15,7 +15,7 @@
                 </b-form-feedback>
             </div>
         </b-button-group>
-        <b-button-group size="sm" class="mx-1">
+        <b-button-group size="sm">
             <b-form-input :type="secret.visibility ? 'text' : 'password'"
                           size="sm"
                           class="text-left"
@@ -26,7 +26,7 @@
                           :value="secret.content"
             ></b-form-input>
         </b-button-group>
-        <b-button-group size="sm" class="mx-1">
+        <b-button-group size="sm">
             <div role="group">
                 <b-form-input :type="secret.visibility ? 'text' : 'password'"
                               size="sm"
@@ -45,19 +45,28 @@
                 </b-form-feedback>
             </div>
         </b-button-group>
-        <b-button-group  size="sm" class="mx-1">
-            <b-btn @click="toggleVisibility(index)" :title="secret.visibility ? 'Show' : 'Hide'"><icon :name="secret.visibility ? 'eye-slash' : 'eye'"></icon></b-btn>
-        </b-button-group>
-        <b-button-group  size="sm" class="mx-1">
-            <b-btn @click="genSecret(index)" title="Generate"><icon name="bolt"></icon></b-btn>
-        </b-button-group>
-        <b-button-group  size="sm" class="mx-1">
-            <b-btn @click="deleteSecret(index)" title="Delete"><icon name="trash"></icon></b-btn>
-        </b-button-group>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <b-button-group size="sm" class="sx-1">
+                <b-btn @click="copySecret(secret.content)" title="Copy to clipboard"><icon name="copy"></icon></b-btn>
+            </b-button-group>
+            <b-button-group size="sm" class="sx-1">
+                <b-btn @click="toggleVisibility(index)" :title="secret.visibility ? 'Show' : 'Hide'"><icon :name="secret.visibility ? 'eye-slash' : 'eye'"></icon></b-btn>
+            </b-button-group>
+            <b-button-group size="sm" class="sx-1">
+                <b-btn class="btn-outline-secondary" @click="genSecret(index)" title="Generate strong password"><icon name="bolt"></icon></b-btn>
+            </b-button-group>
+            <b-button-group size="sm" class="sx-1">
+                <b-btn @click="genSecretStrong(index)" title="Generate ultra strong password"><icon name="bolt"></icon></b-btn>
+            </b-button-group>
+            <b-button-group size="sm" class="sx-1">
+                <b-btn @click="deleteSecret(index)" title="Delete"><icon name="trash"></icon></b-btn>
+            </b-button-group>
+        </div>
     </b-button-toolbar>
 </template>
 
 <script>
+  const {clipboard} = require('electron')
   export default {
     props: [
       'secret',
@@ -82,12 +91,23 @@
           this.modify()
         }
       },
+      copySecret (text) {
+        clipboard.writeText(text)
+        this.$store.dispatch('startClipboardCountdown')
+        this.$toast('✓ copied')
+      },
       toggleVisibility (index) {
         this.$store.dispatch('toggleSecretVisibility', index)
       },
       genSecret (index) {
         if (confirm('Are you sure you want to regenerate this secret?')) {
           this.$store.dispatch('genSecret', index)
+          this.modify()
+        }
+      },
+      genSecretStrong (index) {
+        if (confirm('Are you sure you want to regenerate this secret?')) {
+          this.$store.dispatch('genSecretStrong', index)
           this.modify()
         }
       }

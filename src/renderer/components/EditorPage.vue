@@ -187,7 +187,8 @@
           'ctrl+3': this.setTab2,
           'ctrl+4': this.setTab3,
           'ctrl+c': this.copyText,
-          'ctrl+p': this.pastePassword,
+          'ctrl+p': this.pastePasswordStrong,
+          'ctrl+shift+p': this.pastePassword,
           'ctrl+t': this.pasteDate,
           'ctrl+-': this.pasteLine,
           'ctrl+=': this.pasteDoubleLine,
@@ -321,6 +322,9 @@
       },
       pastePassword () {
         this.$store.dispatch('editorPastePassword')
+      },
+      pastePasswordStrong () {
+        this.$store.dispatch('editorPastePasswordStrong')
       },
       pasteDate () {
         this.$store.dispatch('editorPasteCurrentDateTime')

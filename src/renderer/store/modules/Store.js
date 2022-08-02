@@ -172,7 +172,7 @@ const mutations = {
     state.notifications[index].unread = false
   },
   addSecretToNote: (state) => {
-    let secret = genPassword()
+    let secret = genPassword(32, true)
     let title = 'password'
     let titles = state.note.secrets.map((item) => {
       return item.title
@@ -218,7 +218,12 @@ const mutations = {
   },
   toggleSecretVisibility (state, index) { state.note.secrets[index].visibility = !state.note.secrets[index].visibility },
   genSecret (state, index) {
-    let secret = genPassword()
+    let secret = genPassword(32)
+    state.note.secrets[index].content = secret
+    state.note.secrets[index].contentRepeat = secret
+  },
+  genSecretStrong (state, index) {
+    let secret = genPassword(32, true)
     state.note.secrets[index].content = secret
     state.note.secrets[index].contentRepeat = secret
   },
@@ -763,6 +768,9 @@ const actions = {
   genSecret (context, index) {
     this.commit('genSecret', index)
   },
+  genSecretStrong (context, index) {
+    this.commit('genSecretStrong', index)
+  },
   setSearchFilter (context, filter) {
     this.commit('emptySelectedNotes')
     this.commit('setSearchFilter', filter)
@@ -1142,10 +1150,10 @@ const actions = {
     clipboard.writeText(state.exportedNotes)
   },
   editorPastePassword (context) {
-    // if (document.activeElement.id !== 'contentTextArea') {
-    //   return
-    // }
     document.execCommand('insertText', false, genPassword())
+  },
+  editorPastePasswordStrong (context) {
+    document.execCommand('insertText', false, genPassword(32, true))
   },
   editorPasteCurrentDateTime (context) {
     // if (document.activeElement.id !== 'contentTextArea') {
@@ -1488,16 +1496,22 @@ function copyObject (obj) {
   return JSON.parse(JSON.stringify(obj))
 }
 
-function genPassword (len = 32) {
+function genPassword (len = 32, useSpecialSigns = false) {
   var text = ''
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789012345678901234567890123456789'
+  var possibleStrong = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789012345678901234567890123456789!' +
+    '@#$%^&*_!@#$%^&*_!@#$%^&*_'
   var first = 'abcdefghijklmnopqrstuvwxyz'
   for (var i = 0; i < len; i++) {
     if (i === 0) {
       text += first.charAt(Math.floor(Math.random() * first.length))
       continue
     }
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
+    if (useSpecialSigns) {
+      text += possibleStrong.charAt(Math.floor(Math.random() * possibleStrong.length))
+    } else {
+      text += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
   }
   return text
 }
