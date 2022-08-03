@@ -685,6 +685,8 @@ const actions = {
     this.commit('updateNoteContent', text)
   },
   editorSave (context, successCallback) {
+    let currentActiveNoteIndex = state.activeNoteIndex
+    let currentActiveNoteId = state.activeNoteId
     let now = moment()
     this.commit('setNoteUpdatedAt', now.valueOf())
     db.update({ _id: state.note._id }, state.note, {}, () => {
@@ -694,6 +696,8 @@ const actions = {
         query: state.searchQuery,
         cb: () => {
           successCallback()
+          this.commit('setActiveNoteIndex', currentActiveNoteIndex)
+          this.commit('setActiveNoteId', currentActiveNoteId)
         }
       })
     })
