@@ -684,6 +684,20 @@ const actions = {
   editorChangeContent (context, text) {
     this.commit('updateNoteContent', text)
   },
+  editorSave (context, successCallback) {
+    let now = moment()
+    this.commit('setNoteUpdatedAt', now.valueOf())
+    db.update({ _id: state.note._id }, state.note, {}, () => {
+      this.dispatch('addNoteToHistory', state.note._id)
+      this.dispatch('loadReminders')
+      this.dispatch('searchNotes', {
+        query: state.searchQuery,
+        cb: () => {
+          successCallback()
+        }
+      })
+    })
+  },
   editorSaveAndClose (context, successCallback) {
     // if (!state.note.content.length && state.note.secrets.length) {
     //   alert('Content must be not empty.')

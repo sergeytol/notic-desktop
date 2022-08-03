@@ -255,9 +255,7 @@
         if (this.$store.state.Store.editorMode === 'add') {
           return
         }
-        let id = this.$store.state.Store.note._id
-        this.$store.dispatch('editorSaveAndClose', () => {
-          this.$store.dispatch('openEditNotePage', id)
+        this.$store.dispatch('editorSave', () => {
           this.$store.dispatch('setNoteIsModified', false)
         })
       },
