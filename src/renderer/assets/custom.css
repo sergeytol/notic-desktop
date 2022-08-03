@@ -494,11 +494,10 @@ h4 {
 }
 
 .screen.notes.cloaking mark {
-    background: inherit !important;
+    background: transparent !important;
     color: inherit !important;
 }
 
-.screen.notes.cloaking mark,
 .screen.notes.cloaking .left-status-bar:not(:active),
 .cloaking .notifications h1:not(:active),
 .cloaking .notes h2:not(:active),
