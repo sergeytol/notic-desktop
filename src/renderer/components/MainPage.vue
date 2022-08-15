@@ -22,8 +22,13 @@
                         <b-form-input type="password"
                                       ref="inputExportedNotesPassword"
                                       @keyup.enter.native="submitExportedNotesPassword()"
-                                      @input="inputExportedNotesPassword($event)">
+                                      @input="inputExportedNotesPassword($event)"
+                                      :state="(this.exportType === 2 && this.exportedNotesPasswordEmpty) ? false : true"
+                                      aria-describedby="input-exported-notes-password-feeback">
                         </b-form-input>
+                        <div class="input-exported-notes-password-feeback" v-if="this.exportType === 2 && this.exportedNotesPasswordEmpty">
+                            Must be not empty
+                        </div>
                     </b-form-group>
                     <b-form-group label="Repeat password:">
                         <div role="group">
@@ -38,8 +43,8 @@
                             </div>
                         </div>
                     </b-form-group>
-                    <b-alert show variant="info" v-show="this.exportedNotesPasswordEmpty">
-                        The password is empty so database won't be encrypted.
+                    <b-alert show variant="info" v-show="this.exportType !== 2 && this.exportedNotesPasswordEmpty">
+                        The password is empty so data won't be encrypted.
                     </b-alert>
                     <div class="row justify-content-md-center">
                         <b-button type="button" variant="primary" @click="submitExportedNotesPassword()">Ok</b-button>
@@ -67,7 +72,8 @@
                         <b-dropdown v-if="this.$store.state.Store.massSelect" title="Action with selected (Ctrl+Shift+M)" size="sm" variant="warning" ref="massSelectDropdown">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all (Ctrl+Shift+.)</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
-                            <b-dropdown-item @click="actionExportEnterPassword()">Export</b-dropdown-item>
+                            <b-dropdown-item @click="actionExportEnterPassword(1)">Export as ciphertext</b-dropdown-item>
+                            <b-dropdown-item @click="actionExportEnterPassword(2)">Export as locked HTML</b-dropdown-item>
                             <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
                         </b-dropdown>
                     </b-button-group>
@@ -191,7 +197,10 @@
         exportedNotesPassword: '',
         exportedNotesRepeatedPassword: '',
         exportedNotesPasswordNotEqual: false,
-        exportedNotesPasswordEmpty: true
+        exportedNotesPasswordEmpty: true,
+        // 1 - ciphertext
+        // 2 - locked HTML
+        exportType: 1
       }
     },
     mounted () {
@@ -463,7 +472,7 @@
           this.$toast('✓ deleted')
         }
       },
-      actionExportEnterPassword () {
+      actionExportEnterPassword (exportType) {
         if (!this.$store.state.Store.selectedNotes.length) {
           return false
         }
@@ -479,6 +488,7 @@
           }
         }
         this.$store.commit('setExportedNotes', JSON.stringify(resultData))
+        this.exportType = exportType
         this.$refs.modalExportedNotesPassword.show()
         this.$store.commit('emptySelectedNotes')
         this.toggleMassSelect()
@@ -515,13 +525,22 @@
         this.exportedNotesPasswordCheck()
       },
       submitExportedNotesPassword () {
+        if (this.exportType === 2 && this.exportedNotesPasswordEmpty) {
+          return
+        }
         if (this.exportedNotesPasswordNotEqual) {
           return
         }
         this.$store.commit('setExportedNotesPassword', this.exportedNotesPassword)
-        this.$store.dispatch('encryptExportedNotesPassword', () => {
-          this.$refs.modalExported.show()
-        })
+        if (this.exportType === 1) {
+          this.$store.dispatch('encryptExportedNotesPassword', () => {
+            this.$refs.modalExported.show()
+          })
+        } else if (this.exportType === 2) {
+          this.$store.dispatch('encryptExportedNotesForLockedHTML', () => {
+            this.$refs.modalExportedNotesPassword.hide()
+          })
+        }
       },
       modalExportedNotesPasswordAutofocus () {
         this.$refs.inputExportedNotesPassword.focus()
