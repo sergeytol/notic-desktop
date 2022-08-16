@@ -501,6 +501,8 @@ h4 {
 .screen.notes.cloaking .left-status-bar:not(:active),
 .cloaking .notifications h1:not(:active),
 .cloaking .notes h2:not(:active),
+.cloaking .notes h2:not(:active) span,
+.cloaking .notes h2:not(:active) button,
 .cloaking .notifications h2:not(:active),
 .cloaking .notes h1:not(:active),
 .cloaking .sidebar .note-link:not(:active),
