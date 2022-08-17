@@ -530,5 +530,5 @@ h4 {
 .note.note-activate {
     animation-name: noteActivationAnimation;
     background-color: #eee;
-    animation-duration: 0.16s;
+    animation-duration: 0.12s;
 }

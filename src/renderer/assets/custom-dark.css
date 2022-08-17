@@ -162,5 +162,5 @@ body.dark-theme {
 .dark-theme .note.note-activate {
     animation-name: noteActivationAnimationDark;
     background-color: #313335;
-    animation-duration: 0.16s;
+    animation-duration: 0.12s;
 }
