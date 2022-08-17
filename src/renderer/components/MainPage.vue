@@ -495,7 +495,15 @@
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       focusOnNoteMenu () {
-        document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
+        let elements = document.querySelectorAll('.note')
+        elements.forEach((element) => {
+          element.classList.remove('note-activate')
+          // hack for restarting animation
+          void element.offsetWidth
+        })
+        let element = document.querySelector('#note_actions_button_' + this.$store.state.Store.activeNoteIndex)
+        element.parentElement.parentElement.classList.add('note-activate')
+        element.focus()
       },
       copyExportedNotesAndClose () {
         this.$store.dispatch('copyExportedNotes')
