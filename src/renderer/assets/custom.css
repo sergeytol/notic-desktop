@@ -515,20 +515,14 @@ h4 {
 @keyframes noteActivationAnimation {
     0% {
         background-color: #eee;
-        border-top: 1px solid #eee;
     }
     50% {
-        background-color: lightblue;
-        border-top: 1px solid lightblue;
+        background-color: #dedcdc;
     }
-    100% {
-        background-color: #eee;
-        border-top: 1px solid #eee;
-    }
-}
 
+}
 .note.note-activate {
     animation-name: noteActivationAnimation;
-    background-color: #eee;
-    animation-duration: 0.12s;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
 }

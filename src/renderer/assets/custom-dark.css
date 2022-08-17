@@ -146,21 +146,15 @@ body.dark-theme {
 
 @keyframes noteActivationAnimationDark {
     0% {
-        background-color: #313335;
-        border-top: 1px solid #313335;
+        opacity: 1;
     }
     50% {
-        background-color: #2a2b2c;
-        border-top: 1px solid #2a2b2c;
+        opacity: 0.6;
     }
-    100% {
-        background-color: #313335;
-        border-top: 1px solid #313335;
-    }
-}
 
+}
 .dark-theme .note.note-activate {
     animation-name: noteActivationAnimationDark;
-    background-color: #313335;
-    animation-duration: 0.12s;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
 }
