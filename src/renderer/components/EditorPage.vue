@@ -27,12 +27,10 @@
                                              ref="content"
                                              class="content"
                                              placeholder="Content"
-                                             :rows="16" autofocus @input="editorChangeContent($event)"  :value="noteContent"
+                                             :rows="18"
+                                             autofocus @input="editorChangeContent($event)"  :value="noteContent"
                             ></b-form-textarea>
                         </b-form-group>
-                        <b-button-group size="sm" class="mx-1">
-                            <b-form-checkbox value="true" :checked="noteHidden" @change="editorToggleHideContent()">Hide the content (Ctrl+H)</b-form-checkbox>
-                        </b-button-group>
                     </b-tab>
                     <b-tab title="Secrets">
                         <div class="secrets">
@@ -85,6 +83,26 @@
                             <b-form-checkbox id="checkbox2" value="true" v-show="noteReminder" :checked="noteReminderRemoveNote" @change="editorToggleReminderRemoveNote()">Remove note after reminder</b-form-checkbox>
                         </b-button-group>
                     </b-tab>
+                    <b-tab title="Settings">
+                        <b-button-group size="sm" class="mx-1">
+                            <b-form-checkbox value="true" ref="editorToggleHideContent" :checked="noteHidden" @change="editorToggleHideContent()">Hide the content (Ctrl+H)</b-form-checkbox>
+                        </b-button-group>
+                        <br>
+                        <br>
+                        <b-form-group>
+                            Mark the note with a color
+                            <br>
+                            <v-swatches
+                                    v-model="color"
+                                    row-length="6"
+                                    shapes="circles"
+                                    :swatches="swatches"
+                                    background-color="inherit"
+                                    swatch-size="33"
+                                    inline
+                            ></v-swatches>
+                        </b-form-group>
+                    </b-tab>
                 </b-tabs>
             </div>
         </b-container>
@@ -92,6 +110,7 @@
 </template>
 
 <script>
+  import VSwatches from 'vue-swatches'
   import EditorSecret from '../components/MainPage/EditorSecret.vue'
   import moment from 'moment'
   import Icon from '../../../node_modules/vue-awesome/components/Icon.vue'
@@ -99,11 +118,22 @@
   export default {
     name: 'editor-page',
     components: {
+      VSwatches,
       Icon,
       EditorSecret },
     data () {
       return {
-        tab: 0
+        tab: 0,
+        color: '',
+        swatches: []
+      }
+    },
+    watch: {
+      color (newVal, oldVal) {
+        if (newVal !== oldVal && this.color !== this.$store.state.Store.note.color) {
+          this.$store.commit('updateNoteColor', this.color)
+          this.modify()
+        }
       }
     },
     computed: {
@@ -155,8 +185,10 @@
           'ctrl+1': this.setTab0,
           'ctrl+2': this.setTab1,
           'ctrl+3': this.setTab2,
+          'ctrl+4': this.setTab3,
           'ctrl+c': this.copyText,
-          'ctrl+p': this.pastePassword,
+          'ctrl+p': this.pastePasswordStrong,
+          'ctrl+shift+p': this.pastePassword,
           'ctrl+t': this.pasteDate,
           'ctrl+-': this.pasteLine,
           'ctrl+=': this.pasteDoubleLine,
@@ -174,7 +206,10 @@
       this.tab = this.$store.state.Store.editorInitTab
     },
     updated () {
-      if (this.$store.state.Store.needFocusOn === 'editorNoteReminder') {
+      if (this.$store.state.Store.needFocusOn === 'editorToggleHideContent') {
+        this.$store.commit('setNeedFocusOn', null)
+        this.$refs.editorToggleHideContent.$el.getElementsByTagName('input')[0].focus()
+      } else if (this.$store.state.Store.needFocusOn === 'editorNoteReminder') {
         this.$store.commit('setNeedFocusOn', null)
         this.$refs.editorNoteReminder.$el.getElementsByTagName('input')[0].focus()
       } else if (this.$store.state.Store.needFocusOn === 'editorNoteAddSecret') {
@@ -184,16 +219,21 @@
         this.$store.commit('setNeedFocusOn', null)
         this.$refs.content.focus()
       }
+      this.swatches = this.$store.state.Store.noteColors
+      this.color = this.$store.state.Store.note.color === undefined ? '' : this.$store.state.Store.note.color
     },
     methods: {
       setTab0 () { this.tab = 0 },
       setTab1 () { this.tab = 1 },
       setTab2 () { this.tab = 2 },
+      setTab3 () { this.tab = 3 },
       tabChange ($event) {
         if (this.tab === 1) {
           this.$store.commit('setNeedFocusOn', 'editorNoteAddSecret')
         } else if (this.tab === 2) {
           this.$store.commit('setNeedFocusOn', 'editorNoteReminder')
+        } else if (this.tab === 3) {
+          this.$store.commit('setNeedFocusOn', 'editorToggleHideContent')
         } else if (this.tab === 0) {
           this.$store.commit('setNeedFocusOn', 'content')
         }
@@ -215,9 +255,7 @@
         if (this.$store.state.Store.editorMode === 'add') {
           return
         }
-        let id = this.$store.state.Store.note._id
-        this.$store.dispatch('editorSaveAndClose', () => {
-          this.$store.dispatch('openEditNotePage', id)
+        this.$store.dispatch('editorSave', () => {
           this.$store.dispatch('setNoteIsModified', false)
         })
       },
@@ -282,6 +320,9 @@
       },
       pastePassword () {
         this.$store.dispatch('editorPastePassword')
+      },
+      pastePasswordStrong () {
+        this.$store.dispatch('editorPastePasswordStrong')
       },
       pasteDate () {
         this.$store.dispatch('editorPasteCurrentDateTime')

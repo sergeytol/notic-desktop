@@ -40,7 +40,7 @@ const mainMenuTemplate = [
       },
       {type: 'separator'},
       {
-        label: 'Import notes',
+        label: 'Import notes from ciphertext',
         accelerator: 'F4',
         click () {
           bus.$emit('openImport')

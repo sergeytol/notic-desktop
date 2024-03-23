@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid class="screen notes" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn">
+    <b-container fluid :class="{screen: true, notes: true, cloaking: cloakingEnabled}" v-hotkey="keymap" v-show="this.$store.state.Store.isLoggedIn">
         <b-modal size="sm" ref="modalQr" id="modal-qr" class="modal-qr" hide-footer title="QR from clipboard">
             <div class="my-4 qr" v-html="qr"></div>
         </b-modal>
@@ -22,8 +22,13 @@
                         <b-form-input type="password"
                                       ref="inputExportedNotesPassword"
                                       @keyup.enter.native="submitExportedNotesPassword()"
-                                      @input="inputExportedNotesPassword($event)">
+                                      @input="inputExportedNotesPassword($event)"
+                                      :state="(this.exportType === 2 && this.exportedNotesPasswordEmpty) ? false : true"
+                                      aria-describedby="input-exported-notes-password-feeback">
                         </b-form-input>
+                        <div class="input-exported-notes-password-feeback" v-if="this.exportType === 2 && this.exportedNotesPasswordEmpty">
+                            Must be not empty
+                        </div>
                     </b-form-group>
                     <b-form-group label="Repeat password:">
                         <div role="group">
@@ -38,8 +43,8 @@
                             </div>
                         </div>
                     </b-form-group>
-                    <b-alert show variant="info" v-show="this.exportedNotesPasswordEmpty">
-                        The password is empty so database won't be encrypted.
+                    <b-alert show variant="info" v-show="this.exportType !== 2 && this.exportedNotesPasswordEmpty">
+                        The password is empty so data won't be encrypted.
                     </b-alert>
                     <div class="row justify-content-md-center">
                         <b-button type="button" variant="primary" @click="submitExportedNotesPassword()">Ok</b-button>
@@ -67,7 +72,8 @@
                         <b-dropdown v-if="this.$store.state.Store.massSelect" title="Action with selected (Ctrl+Shift+M)" size="sm" variant="warning" ref="massSelectDropdown">
                             <b-dropdown-item @click="toggleMassCheck">Select / Un-select all (Ctrl+Shift+.)</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
-                            <b-dropdown-item @click="actionExportEnterPassword()">Export</b-dropdown-item>
+                            <b-dropdown-item @click="actionExportEnterPassword(1)">Export as ciphertext</b-dropdown-item>
+                            <b-dropdown-item @click="actionExportEnterPassword(2)">Export as locked HTML</b-dropdown-item>
                             <b-dropdown-item @click="actionDeleteSelectedNotes()">Delete</b-dropdown-item>
                         </b-dropdown>
                     </b-button-group>
@@ -85,7 +91,7 @@
                             <b-button title="Next match (Ctrl+Shift+Right)" @click="goToNextMark()"><icon name="caret-square-down"></icon></b-button>
                             <b-button title="Previous match (Ctrl+Shift+Left)" @click="goToPreviousMark()"><icon name="caret-square-up"></icon></b-button>
                         </b-button-group>
-                        <b-form-input type="search" class="text-left" placeholder="Search" autofocus @input="searchNotes($event)" @keydown.native="searchKeydown($event)" ref="search" :value="searchQuery"></b-form-input>
+                        <b-form-input :type="cloakingEnabled ? 'password' : 'search'" class="note-search text-left" placeholder="Search" autofocus @input="searchNotes($event)" @keydown.native="searchKeydown($event)" ref="search" :value="searchQuery"></b-form-input>
                         <b-button-group size="sm" class="search-filters">
                             <b-button :variant="(searchFilter == 'notes') ? 'warning' : 'secondary'" title="All (Ctrl+1)" @click="setSearchFilter('notes')"><icon name="asterisk"></icon></b-button>
                             <b-button :variant="(searchFilter == 'secrets') ? 'warning' : 'secondary'" title="Secrets (Ctrl+2)" @click="setSearchFilter('secrets')"><icon name="key"></icon></b-button>
@@ -191,7 +197,10 @@
         exportedNotesPassword: '',
         exportedNotesRepeatedPassword: '',
         exportedNotesPasswordNotEqual: false,
-        exportedNotesPasswordEmpty: true
+        exportedNotesPasswordEmpty: true,
+        // 1 - ciphertext
+        // 2 - locked HTML
+        exportType: 1
       }
     },
     mounted () {
@@ -463,7 +472,7 @@
           this.$toast('✓ deleted')
         }
       },
-      actionExportEnterPassword () {
+      actionExportEnterPassword (exportType) {
         if (!this.$store.state.Store.selectedNotes.length) {
           return false
         }
@@ -479,13 +488,22 @@
           }
         }
         this.$store.commit('setExportedNotes', JSON.stringify(resultData))
+        this.exportType = exportType
         this.$refs.modalExportedNotesPassword.show()
         this.$store.commit('emptySelectedNotes')
         this.toggleMassSelect()
         this.$store.dispatch('searchNotes', {query: this.$store.state.Store.searchQuery})
       },
       focusOnNoteMenu () {
-        document.getElementById('note_actions_button_' + this.$store.state.Store.activeNoteIndex).focus()
+        let elements = document.querySelectorAll('.note')
+        elements.forEach((element) => {
+          element.classList.remove('note-activate')
+          // hack for restarting animation
+          void element.offsetWidth
+        })
+        let element = document.querySelector('#note_actions_button_' + this.$store.state.Store.activeNoteIndex)
+        element.parentElement.parentElement.classList.add('note-activate')
+        element.focus()
       },
       copyExportedNotesAndClose () {
         this.$store.dispatch('copyExportedNotes')
@@ -515,13 +533,22 @@
         this.exportedNotesPasswordCheck()
       },
       submitExportedNotesPassword () {
+        if (this.exportType === 2 && this.exportedNotesPasswordEmpty) {
+          return
+        }
         if (this.exportedNotesPasswordNotEqual) {
           return
         }
         this.$store.commit('setExportedNotesPassword', this.exportedNotesPassword)
-        this.$store.dispatch('encryptExportedNotesPassword', () => {
-          this.$refs.modalExported.show()
-        })
+        if (this.exportType === 1) {
+          this.$store.dispatch('encryptExportedNotesPassword', () => {
+            this.$refs.modalExported.show()
+          })
+        } else if (this.exportType === 2) {
+          this.$store.dispatch('encryptExportedNotesForLockedHTML', () => {
+            this.$refs.modalExportedNotesPassword.hide()
+          })
+        }
       },
       modalExportedNotesPasswordAutofocus () {
         this.$refs.inputExportedNotesPassword.focus()
@@ -684,6 +711,9 @@
       },
       searchCmd () {
         return this.$store.state.Store.searchCmd
+      },
+      cloakingEnabled () {
+        return this.$store.state.Store.settings.cloaking
       }
     }
   }

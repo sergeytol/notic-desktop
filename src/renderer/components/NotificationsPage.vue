@@ -1,6 +1,6 @@
 <template>
     <b-form>
-        <b-container fluid class="screen notifications" v-hotkey="keymap">
+        <b-container fluid class="screen notifications" :class="{screen: true, notifications: true, cloaking: cloakingEnabled}" v-hotkey="keymap">
             <div class="topbar">
                 <div class="row" align-h="between">
                     <div class="col-6">
@@ -42,6 +42,9 @@
       },
       notifications () {
         return this.$store.getters.notifications
+      },
+      cloakingEnabled () {
+        return this.$store.state.Store.settings.cloaking
       }
     },
     mounted () {
