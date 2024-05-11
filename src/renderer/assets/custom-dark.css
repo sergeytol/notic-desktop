@@ -143,3 +143,18 @@ body.dark-theme {
     color: #c7c7c7;
     margin: 1px;
 }
+
+@keyframes noteActivationAnimationDark {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+
+}
+.dark-theme .note.note-activate {
+    animation-name: noteActivationAnimationDark;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+}
